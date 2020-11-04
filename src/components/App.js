@@ -1,51 +1,31 @@
-import './App.css';
+import React from 'react'; 
+import Header from '../components/Header';
+import Main from '../components/Main';
+import Footer from '../components/Footer';
+
+
 
 function App() {
   return (
-    <div className="App">
+    <>
       <div className="page">
-        <header className="header">
-          <div className="header__logo"></div>
-        </header>
-
-        <main>
-          <section className="profile">
-            <div className="profile__description">
-              <button className="profile__edit-avatar-btn">
-                <div className="profile__edit-btn-overlay"></div>
-                <img src="#" alt="аватар" className="profile__avatar" />
-              </button>
-              <div className="profile__info">
-                <h1 className="profile__name"></h1>
-                <p className="profile__bio"></p>
-                <button type="button" className="profile__edit-btn"></button>
-              </div>
-            </div>
-            <button type="button" className="profile__add-btn"></button>
-          </section>
-
-          <section className="elements">
-            <ul className="elements__list">
-            </ul>
-          </section>
-
-        </main>
-        <footer className="footer">
-          <p className="footer__text">&#169; 2020 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
+        
       </div>
 
     <div className="modal modal_type_edit-profile">
-      <form action="#" className="modal__container modal__edit-profile-form" novalidate>
+      <form action="#" className="modal__container modal__edit-profile-form" noValidate>
         <button type="reset" className="modal__reset-btn"></button>
         <fieldset className="modal__info-input">
           <legend className="modal__title">Редактировать профиль</legend>
             <label className="modal__input-field">
-              <input type="text" name="name" placeholder="Имя" className="modal__name modal__input-line" id="input-name" required minlength="2" maxlength="40" />
+              <input type="text" name="name" placeholder="Имя" className="modal__name modal__input-line" id="input-name" required minLength="2" maxLength="40" />
               <span className="modal__error" id="input-name-error"></span>
             </label>
             <label className="modal__input-field">
-              <input type="text" name="about" placeholder="О вас" className="modal__bio modal__input-line" id="input-bio" required minlength="2" maxlength="200" />
+              <input type="text" name="about" placeholder="О вас" className="modal__bio modal__input-line" id="input-bio" required minLength="2" maxLength="200" />
               <span className="modal__error" id="input-bio-error"></span>
             </label>
         </fieldset>
@@ -54,7 +34,7 @@ function App() {
     </div>
 
     <div className="modal modal_type_edit-avatar">
-      <form action="#" className="modal__container modal__container_type_edit-avatar modal__edit-avatar-form" novalidate>
+      <form action="#" className="modal__container modal__container_type_edit-avatar modal__edit-avatar-form" noValidate>
         <button type="reset" className="modal__reset-btn"></button>
         <fieldset className="modal__info-input">
           <legend className="modal__title">Обновить аватар</legend>
@@ -68,12 +48,12 @@ function App() {
     </div>
 
     <div className="modal modal_type_add-card">
-      <form action="#" className="modal__container modal__add-card-form" novalidate>
+      <form action="#" className="modal__container modal__add-card-form" noValidate>
         <button type="reset" className="modal__reset-btn"></button>
         <fieldset className="modal__info-input">
           <legend className="modal__title">Новое место</legend>
             <label className="modal__input-field">
-              <input type="text" name="title" placeholder="Название" className="modal__place-title modal__input-line" id="input-place-title" required minlength="1" maxlength="30" />
+              <input type="text" name="title" placeholder="Название" className="modal__place-title modal__input-line" id="input-place-title" required minLength="1" maxLength="30" />
               <span className="modal__error" id="input-place-title-error"></span>
             </label>
             <label className="modal__input-field">
@@ -123,7 +103,7 @@ function App() {
         </div>
       </li>
     </template>
-    </div>
+    </>
   );
 }
 
