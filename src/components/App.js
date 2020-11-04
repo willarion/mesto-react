@@ -10,29 +10,47 @@ import PopupWithConfirm from './PopupWithConfirm';
 
 
 
-function handleEditProfileClick() {
-  document.querySelector('.modal_type_edit-profile').classList.add('modal_visible');
-}
-
-function handleEditAvatarClick() {
-  document.querySelector('.modal_type_edit-avatar').classList.add('modal_visible');
-}
-
-function handleAddPlaceClick() {
-  document.querySelector('.modal_type_add-card').classList.add('modal_visible');
-}
-
-
 function App() {
+
+  const [isEditProfilePopupOpen, changeEditProfilePopupState] = React.useState(false);
+  
+  const [isEditAvatarPopupOpen, changeEditAvatarPopupState] = React.useState(false);
+
+  const [isAddPlacePopupOpen, changeAddPlacePopupState] = React.useState(false);
+
+
+  function handleEditProfileClick() {
+    changeEditProfilePopupState(true);
+  }
+  
+  function handleEditAvatarClick() {
+    changeEditAvatarPopupState(true);
+  }
+  
+  function handleAddPlaceClick() {
+    changeAddPlacePopupState(true);
+  }
+
+  function closeAllPopups() {
+    changeEditProfilePopupState(false);
+    changeEditAvatarPopupState(false);
+    changeAddPlacePopupState(false);
+  }
+
+
   return (
     <>
       <div className="page">
         <Header />
-        <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} />
+        <Main 
+          onEditProfile={handleEditProfileClick} 
+          onEditAvatar={handleEditAvatarClick} 
+          onAddPlace={handleAddPlaceClick} 
+        />
         <Footer />  
       </div>
 
-      <PopupWithForm modalName="type_edit-profile" formName="edit-profile-form" title="Редактировать профиль" buttonValue="Сохранить">
+      <PopupWithForm modalName="type_edit-profile" formName="edit-profile-form" title="Редактировать профиль" buttonValue="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
         <label className="modal__input-field">
             <input type="text" name="name" placeholder="Имя" className="modal__name modal__input-line" id="input-name" required minLength="2" maxLength="40" />
             <span className="modal__error" id="input-name-error"></span>
@@ -43,14 +61,14 @@ function App() {
         </label>
       </PopupWithForm>
     
-      <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить">
+      <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить" isOpen={isEditAvatarPopupOpen}>
         <label className="modal__input-field">
           <input type="url" name="avatar" placeholder="Ссылка на аватар" className="modal__avatar-url modal__input-line" id="input-avatar-url" required />
           <span className="modal__error" id="input-avatar-url-error"></span>
         </label>
       </PopupWithForm>
 
-      <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать">
+      <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать" isOpen={isAddPlacePopupOpen}>
         <label className="modal__input-field">
           <input type="text" name="title" placeholder="Название" className="modal__place-title modal__input-line" id="input-place-title" required minLength="1" maxLength="30" />
           <span className="modal__error" id="input-place-title-error"></span>
@@ -67,21 +85,21 @@ function App() {
 
       <PopupWithConfirm />
 
-      <template className="card-template">
-        <li className="card-element">
-          <div className="element">
-            <button type="button" className="element__delete-btn"></button>
-            <img src="#" alt="" className="element__image" />
-            <div className="element__caption">
-              <p className="element__text"></p>
-              <div className="element__like-display">
-                <button type="submit" className="element__like"></button>
-                <p className="element__like-counter"></p>
-              </div>
+    <template className="card-template">
+      <li className="card-element">
+        <div className="element">
+          <button type="button" className="element__delete-btn"></button>
+          <img src="#" alt="" className="element__image" />
+          <div className="element__caption">
+            <p className="element__text"></p>
+            <div className="element__like-display">
+              <button type="submit" className="element__like"></button>
+              <p className="element__like-counter"></p>
             </div>
           </div>
-        </li>
-      </template>
+        </div>
+      </li>
+    </template>
     </>
   );
 }

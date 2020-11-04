@@ -17,7 +17,7 @@ function Main(props) {
             <button type="button" className="profile__edit-btn" onClick={props.onEditProfile}></button>
           </div>
         </div>
-        <button type="button" className="profile__add-btn" onClick={props.onAddPlace }></button>
+        <button type="button" className="profile__add-btn" onClick={props.onAddPlace}></button>
       </section>
 
       <section className="elements">

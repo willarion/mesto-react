@@ -3,9 +3,9 @@ import React from 'react';
 
 function PopupWithForm(props) {
   return (
-    <div className={`modal modal_${props.modalName}`}>
+    <div className={props.isOpen ? `modal_visible modal modal_${props.modalName}` : `modal modal_${props.modalName}`}>
       <form action="#" className={`modal__container modal__${props.formName}`} noValidate>
-        <button type="reset" className="modal__reset-btn"></button>
+        <button type="reset" className="modal__reset-btn" onClick={props.onClose}></button>
         <fieldset className="modal__info-input">
           <legend className="modal__title">{props.title}</legend>
           {props.children}  
