@@ -18,6 +18,14 @@ function App() {
 
   const [isAddPlacePopupOpen, changeAddPlacePopupState] = React.useState(false);
 
+  const emptySelectedCard = 
+    {
+      link: '#',
+      name: ''
+    }
+  const [selectedCard, setSelectedCard] = React.useState(emptySelectedCard);
+  const [isSelectedCardOpen, changeSelectedCardState] = React.useState(false);
+
 
   function handleEditProfileClick() {
     changeEditProfilePopupState(true);
@@ -31,10 +39,17 @@ function App() {
     changeAddPlacePopupState(true);
   }
 
+  function handleCardClick(data) {
+    setSelectedCard(data);
+    changeSelectedCardState(true);
+  }
+
   function closeAllPopups() {
     changeEditProfilePopupState(false);
     changeEditAvatarPopupState(false);
     changeAddPlacePopupState(false);
+    setSelectedCard(emptySelectedCard);
+    changeSelectedCardState(false);
   }
 
 
@@ -46,6 +61,7 @@ function App() {
           onEditProfile={handleEditProfileClick} 
           onEditAvatar={handleEditAvatarClick} 
           onAddPlace={handleAddPlaceClick} 
+          onCardClick={handleCardClick}
         />
         <Footer />  
       </div>
@@ -79,7 +95,7 @@ function App() {
         </label>
       </PopupWithForm>    
 
-      <PopupWithImage />
+      <PopupWithImage card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
 
       <PopupWithError />
 
