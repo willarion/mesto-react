@@ -26,7 +26,7 @@ class Api {
     .then(this._handleOriginalResponse);
   }
 
-  _getInitialCards() {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._authorization

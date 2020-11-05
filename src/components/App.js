@@ -85,21 +85,6 @@ function App() {
 
       <PopupWithConfirm />
 
-    <template className="card-template">
-      <li className="card-element">
-        <div className="element">
-          <button type="button" className="element__delete-btn"></button>
-          <img src="#" alt="" className="element__image" />
-          <div className="element__caption">
-            <p className="element__text"></p>
-            <div className="element__like-display">
-              <button type="submit" className="element__like"></button>
-              <p className="element__like-counter"></p>
-            </div>
-          </div>
-        </div>
-      </li>
-    </template>
     </>
   );
 }

@@ -3,7 +3,7 @@ import api from '../utils/Api';
 
 
 function Main(props) {
-
+  // данные пользователя
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -24,8 +24,26 @@ function Main(props) {
     },
     [] // вызовется только один раз при монтировании компонента
   );
-
   
+
+  // карточки
+  const [cards, setCards] = React.useState([]);
+  
+  React.useEffect(() => {
+    const cards = api.getInitialCards();
+    
+    cards
+    .then((cardsArray) => {
+      setCards(cardsArray);
+    })
+    .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+    },
+    [] // вызовется только один раз при монтировании компонента
+  );
+
+
 
   return (
     <main>
@@ -46,6 +64,21 @@ function Main(props) {
 
       <section className="elements">
         <ul className="elements__list">
+          {cards.map((card) => (
+            <li key={card._id} className="card-element">
+              <div className="element">
+                <button type="button" className="element__delete-btn"></button>
+                <img src={card.link} alt={card.name} className="element__image" />
+                <div className="element__caption">
+                  <p className="element__text">{card.name} </p>
+                  <div className="element__like-display">
+                    <button type="submit" className="element__like"></button>
+                    <p className="element__like-counter">{card.likes.length}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
         </ul>
       </section>
     </main>
