@@ -35,119 +35,119 @@ class Api {
     .then(this._handleOriginalResponse);
   }
 
-  renderInitialPage(setInitialUserInfo, callbackForRenderInitialCards) {
-    Promise.all([
-      this.getUserInfo(),
-      this._getInitialCards(),
-    ])
-      .then(([userData, initialCards]) => {
-        setInitialUserInfo(userData);
-        callbackForRenderInitialCards(initialCards);
-      })
-      .catch((err) => {
-        this._renderError(`Ошибка: ${err}`);
-      }); 
-  }
+  // renderInitialPage(setInitialUserInfo, callbackForRenderInitialCards) {
+  //   Promise.all([
+  //     this.getUserInfo(),
+  //     this._getInitialCards(),
+  //   ])
+  //     .then(([userData, initialCards]) => {
+  //       setInitialUserInfo(userData);
+  //       callbackForRenderInitialCards(initialCards);
+  //     })
+  //     .catch((err) => {
+  //       this._renderError(`Ошибка: ${err}`);
+  //     }); 
+  // }
 
-  editUserInfo(userInfoObj, setUserInfoFromApi, submitBtn, editProfilePopup) {
-    fetch(`${this._baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: {
-      authorization: this._authorization,
-      'Content-Type': this._contentType
-      },
-      body: JSON.stringify(userInfoObj)
-    })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-    setUserInfoFromApi(res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    })
-    .finally(this._renderLoading(false, submitBtn, editProfilePopup));
-  }
+  // editUserInfo(userInfoObj, setUserInfoFromApi, submitBtn, editProfilePopup) {
+  //   fetch(`${this._baseUrl}/users/me`, {
+  //   method: 'PATCH',
+  //   headers: {
+  //     authorization: this._authorization,
+  //     'Content-Type': this._contentType
+  //     },
+  //     body: JSON.stringify(userInfoObj)
+  //   })
+  //   .then(this._handleOriginalResponse)
+  //   .then((res) => {
+  //   setUserInfoFromApi(res);
+  //   })
+  //   .catch((err) => {
+  //     this._renderError(`Ошибка: ${err}`);
+  //   })
+  //   .finally(this._renderLoading(false, submitBtn, editProfilePopup));
+  // }
 
-  editAvatar(avatarLink, setAvatarFromApi, submitBtn, editAvatarPopup) {
-    fetch(`${this._baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: {
-      authorization: this._authorization,
-      'Content-Type': this._contentType
-      },
-      body: JSON.stringify(avatarLink)
-    })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      setAvatarFromApi(res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    })
-    .finally(this._renderLoading(false, submitBtn, editAvatarPopup));
-  }
+  // editAvatar(avatarLink, setAvatarFromApi, submitBtn, editAvatarPopup) {
+  //   fetch(`${this._baseUrl}/users/me/avatar`, {
+  //   method: 'PATCH',
+  //   headers: {
+  //     authorization: this._authorization,
+  //     'Content-Type': this._contentType
+  //     },
+  //     body: JSON.stringify(avatarLink)
+  //   })
+  //   .then(this._handleOriginalResponse)
+  //   .then((res) => {
+  //     setAvatarFromApi(res);
+  //   })
+  //   .catch((err) => {
+  //     this._renderError(`Ошибка: ${err}`);
+  //   })
+  //   .finally(this._renderLoading(false, submitBtn, editAvatarPopup));
+  // }
 
-  addNewCard(cardInfo, createNewCardFromApi, submitBtn, addCardPopup) {
-    fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-        },
-      body: JSON.stringify(cardInfo)
-    })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      createNewCardFromApi(res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    })
-    .finally(this._renderLoading(false, submitBtn, addCardPopup));
-  }
+  // addNewCard(cardInfo, createNewCardFromApi, submitBtn, addCardPopup) {
+  //   fetch(`${this._baseUrl}/cards`, {
+  //     method: 'POST',
+  //     headers: {
+  //       authorization: this._authorization,
+  //       'Content-Type': this._contentType
+  //       },
+  //     body: JSON.stringify(cardInfo)
+  //   })
+  //   .then(this._handleOriginalResponse)
+  //   .then((res) => {
+  //     createNewCardFromApi(res);
+  //   })
+  //   .catch((err) => {
+  //     this._renderError(`Ошибка: ${err}`);
+  //   })
+  //   .finally(this._renderLoading(false, submitBtn, addCardPopup));
+  // }
 
-  getCardData(cardId, cardElement) {
-    this._cardId = cardId;
-    this._cardElement = cardElement;
-  }
+  // getCardData(cardId, cardElement) {
+  //   this._cardId = cardId;
+  //   this._cardElement = cardElement;
+  // }
 
-  deleteCard(closeConfirmPopup) {
-    fetch(`${this._baseUrl}/cards/${this._cardId}`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this._authorization
-        }
-    })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      console.log(res);
-      this._cardElement.remove();
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    })
-    .finally(closeConfirmPopup);
-  }
+  // deleteCard(closeConfirmPopup) {
+  //   fetch(`${this._baseUrl}/cards/${this._cardId}`, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       authorization: this._authorization
+  //       }
+  //   })
+  //   .then(this._handleOriginalResponse)
+  //   .then((res) => {
+  //     console.log(res);
+  //     this._cardElement.remove();
+  //   })
+  //   .catch((err) => {
+  //     this._renderError(`Ошибка: ${err}`);
+  //   })
+  //   .finally(closeConfirmPopup);
+  // }
 
-  putCardLike() {
-    return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
-      method: 'PUT',
-      headers: {
-        authorization: this._authorization
-        }
-    })
-    .then(this._handleOriginalResponse);
-  }
+  // putCardLike() {
+  //   return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       authorization: this._authorization
+  //       }
+  //   })
+  //   .then(this._handleOriginalResponse);
+  // }
 
-  deleteCardLike() {
-    return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
-      method: 'DELETE',
-      headers: {
-        authorization: this._authorization
-        }
-    })
-    .then(this._handleOriginalResponse);
-  }
+  // deleteCardLike() {
+  //   return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       authorization: this._authorization
+  //       }
+  //   })
+  //   .then(this._handleOriginalResponse);
+  // }
   
 }
 
