@@ -3,8 +3,7 @@ import Header from '../components/Header';
 import Main from '../components/Main';
 import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
-import PopupWithImage from './PopupWithImage';
-import PopupWithError from './PopupWithError';
+import ImagePopup from './ImagePopup';
 import PopupWithConfirm from './PopupWithConfirm';
 
 
@@ -95,9 +94,7 @@ function App() {
         </label>
       </PopupWithForm>    
 
-      <PopupWithImage card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
-
-      <PopupWithError />
+      <ImagePopup card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
 
       <PopupWithConfirm />
 
