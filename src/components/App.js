@@ -4,7 +4,6 @@ import Main from '../components/Main';
 import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import PopupWithConfirm from './PopupWithConfirm';
 
 
 
@@ -92,12 +91,12 @@ function App() {
           <input type="url" name="link" placeholder="Ссылка на картинку" className="modal__image-url modal__input-line" id="input-image-url" required />
           <span className="modal__error" id="input-image-url-error"></span>
         </label>
-      </PopupWithForm>    
+      </PopupWithForm>  
+      
+      <PopupWithForm modalName="type_delete-confirm" formName="delete-confirm-form" title="Вы уверены?" buttonValue="Да" />  
 
       <ImagePopup card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
-
-      <PopupWithConfirm />
-
+   
     </>
   );
 }
