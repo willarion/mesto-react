@@ -75,14 +75,14 @@ function App() {
         </label>
       </PopupWithForm>
     
-      <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить" isOpen={isEditAvatarPopupOpen}>
+      <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить" isOpen={isEditAvatarPopupOpen}onClose={closeAllPopups}>
         <label className="modal__input-field">
           <input type="url" name="avatar" placeholder="Ссылка на аватар" className="modal__avatar-url modal__input-line" id="input-avatar-url" required />
           <span className="modal__error" id="input-avatar-url-error"></span>
         </label>
       </PopupWithForm>
 
-      <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать" isOpen={isAddPlacePopupOpen}>
+      <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <label className="modal__input-field">
           <input type="text" name="title" placeholder="Название" className="modal__place-title modal__input-line" id="input-place-title" required minLength="1" maxLength="30" />
           <span className="modal__error" id="input-place-title-error"></span>
@@ -93,7 +93,7 @@ function App() {
         </label>
       </PopupWithForm>  
       
-      <PopupWithForm modalName="type_delete-confirm" formName="delete-confirm-form" title="Вы уверены?" buttonValue="Да" />  
+      <PopupWithForm modalName="type_delete-confirm" formName="delete-confirm-form" title="Вы уверены?" buttonValue="Да" onClose={closeAllPopups} />  
 
       <ImagePopup card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
    

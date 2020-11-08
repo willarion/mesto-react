@@ -3,7 +3,6 @@ import React from 'react';
 
 function ImagePopup(props) {
 
-  console.log(props)
   return (
     <div className={props.isOpen ? `modal_visible modal modal_type_big-image` : 'modal modal_type_big-image'}>
       <figure className="modal__figure">
