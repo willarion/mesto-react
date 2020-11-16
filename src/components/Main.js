@@ -35,7 +35,23 @@ function Main(props) {
       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
       
       setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
     });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id);
+    // .then((res) => {
+    // console.log(res);
+    const newCards = cards.filter((c) => c._id !== card._id);
+
+    setCards(newCards);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   }
 
 
@@ -59,7 +75,7 @@ function Main(props) {
       <section className="elements">
         <ul className="elements__list">
           {cards.map((card) => (
-            <Card onCardLike={handleCardLike} card={card} key={card._id} onCardClick={props.onCardClick} />
+            <Card onCardDelete={handleCardDelete} onCardLike={handleCardLike} card={card} key={card._id} onCardClick={props.onCardClick} />
           ))}
         </ul>
       </section>

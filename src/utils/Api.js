@@ -57,6 +57,17 @@ class Api {
       .then(this._handleOriginalResponse);
     }
   }
+
+  deleteCard(cardId) {
+    fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+        }
+    })
+    .then(this._handleOriginalResponse);
+  }
+
 }
 
 const api = new Api(apiSettings);
