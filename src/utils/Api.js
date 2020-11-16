@@ -32,6 +32,31 @@ class Api {
     })
     .then(this._handleOriginalResponse);
   }  
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      //putCardLike
+
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: {
+          authorization: this._authorization
+          }
+      })
+      .then(this._handleOriginalResponse);
+    }
+    else {
+      //deleteCardLike
+
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+          authorization: this._authorization
+          }
+      })
+      .then(this._handleOriginalResponse);
+    }
+  }
 }
 
 const api = new Api(apiSettings);

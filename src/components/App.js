@@ -4,11 +4,31 @@ import Main from '../components/Main';
 import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import api from '../utils/Api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
 
 
 function App() {
+
+  const [currentUser, setCurrentUser] = React.useState({});
+
+  React.useEffect(() => {
+    const userInfo = api.getUserInfo();
+    
+    userInfo
+    .then((infoObj) => {
+      
+      setCurrentUser(infoObj);
+    })
+    .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+    },
+    [] // вызовется только один раз при монтировании компонента
+  );
+
 
   const [isEditProfilePopupOpen, changeEditProfilePopupState] = React.useState(false);
   
@@ -52,7 +72,7 @@ function App() {
 
 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main 
@@ -97,7 +117,7 @@ function App() {
 
       <ImagePopup card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />
    
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
