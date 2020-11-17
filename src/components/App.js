@@ -4,6 +4,7 @@ import Main from '../components/Main';
 import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -85,6 +86,20 @@ function App() {
 
   }
 
+  function handleUpdateAvatar(avatarInfoObj) {
+    api.setUserAvatar(avatarInfoObj)
+    .then((res) => {
+      setCurrentUser(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(
+      closeAllPopups()
+    )
+
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -101,12 +116,7 @@ function App() {
 
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} /> 
     
-      <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить" isOpen={isEditAvatarPopupOpen}onClose={closeAllPopups}>
-        <label className="modal__input-field">
-          <input type="url" name="avatar" placeholder="Ссылка на аватар" className="modal__avatar-url modal__input-line" id="input-avatar-url" required />
-          <span className="modal__error" id="input-avatar-url-error"></span>
-        </label>
-      </PopupWithForm>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
       <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <label className="modal__input-field">

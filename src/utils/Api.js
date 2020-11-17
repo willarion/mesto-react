@@ -71,16 +71,27 @@ class Api {
 
   setUserInfo(userInfoObj) {
     return fetch(`${this._baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: {
-      authorization: this._authorization,
-      'Content-Type': this._contentType
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
       },
       body: JSON.stringify(userInfoObj)
     })
     .then(this._handleOriginalResponse);
   }
 
+  setUserAvatar(avatarLink) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+        },
+      body: JSON.stringify(avatarLink)
+    })
+    .then(this._handleOriginalResponse);
+  }
 }
 
 const api = new Api(apiSettings);
