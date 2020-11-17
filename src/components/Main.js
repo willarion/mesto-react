@@ -13,9 +13,8 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
   
   React.useEffect(() => {
-    const cards = api.getInitialCards();
-    
-    cards
+   
+    api.getInitialCards()
     .then((cardsArray) => {
       setCards(cardsArray);
     })
@@ -42,16 +41,15 @@ function Main(props) {
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id);
-    // .then((res) => {
-    // console.log(res);
-    const newCards = cards.filter((c) => c._id !== card._id);
+    api.deleteCard(card._id)
+    .then((res) => {
+      const newCards = cards.filter((c) => c._id !== card._id);
 
-    setCards(newCards);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+      setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
 

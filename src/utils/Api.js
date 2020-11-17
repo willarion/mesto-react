@@ -9,6 +9,7 @@ class Api {
   }
 
   _handleOriginalResponse(res) {
+    
     if (res.ok) {
       return res.json();
     }
@@ -59,11 +60,23 @@ class Api {
   }
 
   deleteCard(cardId) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
         }
+    })
+    .then(this._handleOriginalResponse);
+  }
+
+  setUserInfo(userInfoObj) {
+    return fetch(`${this._baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      authorization: this._authorization,
+      'Content-Type': this._contentType
+      },
+      body: JSON.stringify(userInfoObj)
     })
     .then(this._handleOriginalResponse);
   }

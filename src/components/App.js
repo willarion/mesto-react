@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Main from '../components/Main';
 import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -70,6 +71,20 @@ function App() {
     changeSelectedCardState(false);
   }
 
+  function handleUpdateUser(userInfoObj) {
+    api.setUserInfo(userInfoObj)
+    .then((res) => {
+      setCurrentUser(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(
+      closeAllPopups()
+    )
+
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -84,16 +99,7 @@ function App() {
         <Footer />  
       </div>
 
-      <PopupWithForm modalName="type_edit-profile" formName="edit-profile-form" title="Редактировать профиль" buttonValue="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <label className="modal__input-field">
-            <input type="text" name="name" placeholder="Имя" className="modal__name modal__input-line" id="input-name" required minLength="2" maxLength="40" />
-            <span className="modal__error" id="input-name-error"></span>
-        </label>
-        <label className="modal__input-field">
-            <input type="text" name="about" placeholder="О вас" className="modal__bio modal__input-line" id="input-bio" required minLength="2" maxLength="200" />
-            <span className="modal__error" id="input-bio-error"></span>
-        </label>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} /> 
     
       <PopupWithForm modalName="type_edit-avatar" formName="edit-avatar-form" title="Обновить аватар" buttonValue="Сохранить" isOpen={isEditAvatarPopupOpen}onClose={closeAllPopups}>
         <label className="modal__input-field">
