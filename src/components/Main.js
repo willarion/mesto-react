@@ -1,5 +1,4 @@
 import React from 'react';
-import api from '../utils/Api';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -8,49 +7,6 @@ function Main(props) {
 
   //данные пользователя
   const currentUser = React.useContext(CurrentUserContext);
-
-  // карточки
-  const [cards, setCards] = React.useState([]);
-  
-  React.useEffect(() => {
-   
-    api.getInitialCards()
-    .then((cardsArray) => {
-      setCards(cardsArray);
-    })
-    .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-    },
-    [] // вызовется только один раз при монтировании компонента
-  );
-
-  
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    
-    api.changeLikeCardStatus(card._id, !isLiked)
-    .then((newCard) => {
-      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-      
-      setCards(newCards);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
-    .then((res) => {
-      const newCards = cards.filter((c) => c._id !== card._id);
-
-      setCards(newCards);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
 
 
   return (
@@ -72,8 +28,8 @@ function Main(props) {
 
       <section className="elements">
         <ul className="elements__list">
-          {cards.map((card) => (
-            <Card onCardDelete={handleCardDelete} onCardLike={handleCardLike} card={card} key={card._id} onCardClick={props.onCardClick} />
+          {props.cards.map((card) => (
+            <Card onCardDelete={props.onCardDelete} onCardLike={props.onCardLike} card={card} key={card._id} onCardClick={props.onCardClick} />
           ))}
         </ul>
       </section>

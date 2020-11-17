@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -13,7 +14,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
 function App() {
-
+  //получение данных пользователя
   const [currentUser, setCurrentUser] = React.useState({});
 
   React.useEffect(() => {
@@ -31,7 +32,8 @@ function App() {
     [] // вызовется только один раз при монтировании компонента
   );
 
-
+  
+  //открытие и закрытие модалок
   const [isEditProfilePopupOpen, changeEditProfilePopupState] = React.useState(false);
   
   const [isEditAvatarPopupOpen, changeEditAvatarPopupState] = React.useState(false);
@@ -72,6 +74,8 @@ function App() {
     changeSelectedCardState(false);
   }
 
+
+  //редактирование профиля
   function handleUpdateUser(userInfoObj) {
     api.setUserInfo(userInfoObj)
     .then((res) => {
@@ -101,6 +105,66 @@ function App() {
   }
 
 
+  //карточки
+  const [cards, setCards] = React.useState([]);
+  
+  React.useEffect(() => {
+   
+    api.getCardList()
+    .then((cardsArray) => {
+      setCards(cardsArray);
+    })
+    .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+    },
+    [] // вызовется только один раз при монтировании компонента
+  );
+
+  
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    api.changeLikeCardStatus(card._id, !isLiked)
+    .then((newCard) => {
+      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+      
+      setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+    .then((res) => {
+      console.log(res);
+      const newCards = cards.filter((c) => c._id !== card._id);
+
+      setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  function handleAddPlaceSubmit(cardInfo) {
+
+    api.addNewCard(cardInfo)
+    .then((newCard) => {
+      setCards([newCard, ...cards]);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(
+      closeAllPopups()
+    )
+
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -108,8 +172,11 @@ function App() {
         <Main 
           onEditProfile={handleEditProfileClick} 
           onEditAvatar={handleEditAvatarClick} 
-          onAddPlace={handleAddPlaceClick} 
+          onAddPlace={handleAddPlaceClick}
+          cards={cards} 
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />  
       </div>
@@ -118,17 +185,8 @@ function App() {
     
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-      <PopupWithForm modalName="type_add-card" formName="add-card-form" title="Новое место" buttonValue="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-        <label className="modal__input-field">
-          <input type="text" name="title" placeholder="Название" className="modal__place-title modal__input-line" id="input-place-title" required minLength="1" maxLength="30" />
-          <span className="modal__error" id="input-place-title-error"></span>
-        </label>
-        <label className="modal__input-field">
-          <input type="url" name="link" placeholder="Ссылка на картинку" className="modal__image-url modal__input-line" id="input-image-url" required />
-          <span className="modal__error" id="input-image-url-error"></span>
-        </label>
-      </PopupWithForm>  
-      
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+
       <PopupWithForm modalName="type_delete-confirm" formName="delete-confirm-form" title="Вы уверены?" buttonValue="Да" onClose={closeAllPopups} />  
 
       <ImagePopup card={selectedCard} isOpen={isSelectedCardOpen} onClose={closeAllPopups} />

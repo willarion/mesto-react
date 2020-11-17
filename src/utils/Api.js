@@ -25,7 +25,7 @@ class Api {
     .then(this._handleOriginalResponse);
   }
 
-  getInitialCards() {
+  getCardList() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._authorization
@@ -57,6 +57,18 @@ class Api {
       })
       .then(this._handleOriginalResponse);
     }
+  }
+  
+  addNewCard(cardInfo) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+        },
+      body: JSON.stringify(cardInfo)
+    })
+    .then(this._handleOriginalResponse);
   }
 
   deleteCard(cardId) {
