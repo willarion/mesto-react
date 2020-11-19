@@ -80,13 +80,11 @@ function App() {
     api.setUserInfo(userInfoObj)
     .then((res) => {
       setCurrentUser(res);
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(
-      closeAllPopups()
-    )
+    });
 
   }
 
@@ -94,13 +92,11 @@ function App() {
     api.setUserAvatar(avatarInfoObj)
     .then((res) => {
       setCurrentUser(res);
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(
-      closeAllPopups()
-    )
+    });
 
   }
 
@@ -154,13 +150,11 @@ function App() {
     api.addNewCard(cardInfo)
     .then((newCard) => {
       setCards([newCard, ...cards]);
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(
-      closeAllPopups()
-    )
+    });
 
   }
 
